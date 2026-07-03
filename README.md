@@ -247,7 +247,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 ## Author
-
-**BlueLens** - Security Log & IOC Analyzer
-
-*Built for SOC Analysts, Blue Teams, and Security Engineers*
+BAP & OC
