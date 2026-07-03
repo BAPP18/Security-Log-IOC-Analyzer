@@ -201,6 +201,7 @@ The `sample_logs/` folder contains pre-made security log files you can use to te
 Screenshots should be placed in the `screenshots/` directory. Recommended screenshots to capture:
 
 1. **Login Page** - BlueLens login interface with demo credentials
+![Uploading image.png…]()
 2. **Dashboard** - Main dashboard showing statistics and charts
 3. **Upload & Analyze** - File upload page with analysis results
 4. **Search IOCs** - Search interface with filtered results
