@@ -1,0 +1,16 @@
+url,category,severity,source
+http://45.33.32.156/botnet,Malware,High,ThreatIntel
+https://malware.example.com/shell.php,WebShell,Critical,SIEM
+http://185.220.101.42/exploit,ExploitKit,High,ThreatIntel
+https://phishing.example.net/login,Phishing,Critical,AbuseIPDB
+http://evil-c2.xyz/gate,CommandControl,Critical,ThreatIntel
+https://malicious-domain.net/backdoor,Backdoor,Critical,SIEM
+http://91.121.87.34/ransomware,Ransomware,Critical,ThreatIntel
+https://malwarecheck.net/dropper,Dropper,High,AbuseIPDB
+http://198.51.100.23/scan,Scanner,Medium,FirewallLog
+https://suspiciousexample.com/data_exfil,DataTheft,Critical,SIEM
+http://203.0.113.5/bruteforce,BruteForce,High,FirewallLog
+https://paypa1-secure.com/fake_login,Phishing,Critical,EmailGateway
+http://64.227.90.18/c2,C2Server,Critical,ThreatIntel
+https://evil-server.com/backconnect,Backconnect,High,SIEM
+http://169.254.12.34/trojan,Trojan,High,Antivirus

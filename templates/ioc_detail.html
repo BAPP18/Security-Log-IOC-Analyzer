@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <a href="{{ url_for('ioc.search') }}" class="btn btn-sm btn-outline-secondary mb-2">
+            <i class="bi bi-arrow-left"></i> Back to Search
+        </a>
+        <h4 class="text-light">
+            <i class="bi bi-shield-exclamation text-info"></i> IOC Detail
+        </h4>
+    </div>
+</div>
+
+<div class="card bg-dark border-secondary">
+    <div class="card-header bg-dark border-secondary">
+        <h6 class="text-light mb-0"><i class="bi bi-info-circle text-info"></i> Indicator of Compromise Details</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-dark">
+            <tbody>
+                <tr>
+                    <th class="text-muted" style="width: 200px;">IOC Value</th>
+                    <td class="text-light user-select-all">{{ ioc.value }}</td>
+                </tr>
+                <tr>
+                    <th class="text-muted">IOC Type</th>
+                    <td>
+                        <span class="badge bg-{{ 'warning text-dark' if ioc.ioc_type == 'IPv4' else 'primary' if ioc.ioc_type == 'Domain' else 'danger' if ioc.ioc_type == 'URL' else 'success' if ioc.ioc_type == 'Email' else 'secondary' }} fs-6">
+                            {{ ioc.ioc_type }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-muted">Source File</th>
+                    <td class="text-light">{{ ioc.source_file }}</td>
+                </tr>
+                <tr>
+                    <th class="text-muted">Line Number</th>
+                    <td class="text-light">{{ ioc.line_number }}</td>
+                </tr>
+                <tr>
+                    <th class="text-muted">Detection Time</th>
+                    <td class="text-light">{{ ioc.detection_time.strftime('%Y-%m-%d %H:%M:%S') if ioc.detection_time else '-' }}</td>
+                </tr>
+                {% if analysis %}
+                <tr>
+                    <th class="text-muted">Analysis ID</th>
+                    <td class="text-light">#{{ analysis.id }}</td>
+                </tr>
+                <tr>
+                    <th class="text-muted">Uploaded By</th>
+                    <td class="text-light">{{ analysis.analyst.username if analysis.analyst else '-' }}</td>
+                </tr>
+                <tr>
+                    <th class="text-muted">Upload Date</th>
+                    <td class="text-light">{{ analysis.upload_date.strftime('%Y-%m-%d %H:%M:%S') if analysis.upload_date else '-' }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

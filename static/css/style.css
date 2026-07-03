@@ -1,0 +1,83 @@
+body {
+    background-color: #0d1b2a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+    border-radius: 8px;
+    transition: border-color 0.2s;
+}
+
+.card:hover {
+    border-color: #0dcaf0;
+}
+
+.card-header {
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.table-dark {
+    --bs-table-bg: #152238;
+    --bs-table-hover-bg: #1a2d4a;
+}
+
+.table th {
+    border-bottom: 1px solid #2d3a4a !important;
+    font-weight: 600;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+.btn-info {
+    color: #fff;
+}
+
+.pagination .page-link {
+    border: 1px solid #2d3a4a;
+}
+
+.pagination .page-link:hover {
+    background-color: #1a2d4a;
+    border-color: #0dcaf0;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.15);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0d1b2a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2d3a4a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #3d4a5a;
+}
+
+footer {
+    font-size: 0.85rem;
+}

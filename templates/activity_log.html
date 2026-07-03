@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h4 class="text-light">
+            <i class="bi bi-activity text-info"></i> Activity Log
+        </h4>
+        <p class="text-muted">Monitor user activities and system events.</p>
+    </div>
+</div>
+
+<div class="card bg-dark border-secondary mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('activity.index') }}">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <select name="action" class="form-select bg-dark text-light border-secondary">
+                        <option value="">All Activities</option>
+                        {% for action in actions %}
+                        <option value="{{ action }}" {{ 'selected' if selected_action == action }}>{{ action }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-info w-100"><i class="bi bi-filter"></i> Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card bg-dark border-secondary">
+    <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center">
+        <h6 class="text-light mb-0"><i class="bi bi-list"></i> Activity Records ({{ pagination.total }})</h6>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>Description</th>
+                        <th>IP Address</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <td class="text-muted">{{ activity.id }}</td>
+                        <td class="text-info">{{ activity.user.username if activity.user else 'Unknown' }}</td>
+                        <td>
+                            <span class="badge bg-{{ 'success' if activity.action == 'Login' else 'danger' if activity.action == 'Logout' else 'primary' if activity.action == 'Upload File' else 'warning text-dark' if activity.action == 'Export Report' else 'info' if activity.action == 'Analyze File' else 'secondary' }}">
+                                {{ activity.action }}
+                            </span>
+                        </td>
+                        <td class="small text-muted">{{ activity.description or '-' }}</td>
+                        <td class="small text-muted">{{ activity.ip_address or '-' }}</td>
+                        <td class="small">{{ activity.timestamp.strftime('%Y-%m-%d %H:%M:%S') if activity.timestamp else '-' }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                            No activities recorded yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if pagination.pages > 1 %}
+    <div class="card-footer bg-dark border-secondary">
+        <nav>
+            <ul class="pagination pagination-sm mb-0 justify-content-center">
+                {% if pagination.has_prev %}
+                <li class="page-item">
+                    <a class="page-link bg-dark text-info border-secondary" href="{{ url_for('activity.index', action=selected_action, page=pagination.prev_num) }}">Previous</a>
+                </li>
+                {% endif %}
+                {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                    {% if p %}
+                    <li class="page-item {{ 'active' if p == pagination.page }}">
+                        <a class="page-link bg-dark text-info border-secondary {{ 'bg-info text-dark' if p == pagination.page }}" href="{{ url_for('activity.index', action=selected_action, page=p) }}">{{ p }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled"><span class="page-link bg-dark text-muted border-secondary">...</span></li>
+                    {% endif %}
+                {% endfor %}
+                {% if pagination.has_next %}
+                <li class="page-item">
+                    <a class="page-link bg-dark text-info border-secondary" href="{{ url_for('activity.index', action=selected_action, page=pagination.next_num) }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

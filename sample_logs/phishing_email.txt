@@ -1,0 +1,33 @@
+From: security-update@paypa1-secure.com
+Reply-To: phisher@malicious-domain.net
+To: victim@company.com
+Subject: Urgent: Your Account Has Been Compromised!
+Date: Thu, 10 Jan 2024 08:30:00 +0000
+Message-ID: <scam1234@mail.evil-server.com>
+Return-Path: <bounce@malwarecheck.net>
+
+Dear Valued Customer,
+
+We have detected suspicious activity on your account.
+
+Please verify your identity immediately by clicking the link below:
+
+https://paypa1-secure.com/login/verify?token=abc123def456
+
+If you do not verify within 24 hours, your account will be permanently suspended.
+
+Sincerely,
+Security Team
+PayPal Security Department
+
+Contact: support@paypa1-secure.com
+
+---
+This email contains confidential information. If you are not the intended recipient,
+please notify us immediately at report@phishing-report.org.
+
+Suspicious attachment detected: invoice_2024.pdf.exe
+C2 Server: https://evil-c2.xyz/gate.php
+Malware Hash (MD5): d41d8cd98f00b204e9800998ecf8427e
+Malware Hash (SHA1): da39a3ee5e6b4b0d3255bfef95601890afd80709
+Malware Hash (SHA256): e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
