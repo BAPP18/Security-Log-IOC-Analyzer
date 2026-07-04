@@ -196,23 +196,6 @@ The `sample_logs/` folder contains pre-made security log files you can use to te
 
 ---
 
-## Screenshots
-
-Screenshots should be placed in the `screenshots/` directory. Recommended screenshots to capture:
-
-1. **Login Page** - BlueLens login interface with demo credentials
-2. **Dashboard** - Main dashboard showing statistics and charts
-3. **Upload & Analyze** - File upload page with analysis results
-4. **Search IOCs** - Search interface with filtered results
-5. **IOC Detail** - Detailed view of a single IOC
-6. **Analysis History** - History page showing all analyses
-7. **Reports** - Report page with IOC distribution charts
-8. **Export** - Export page with format selection
-9. **Activity Log** - Activity monitoring page
-10. **Mobile View** - Responsive design demonstration
-
----
-
 ## Future Improvements
 
 - [ ] VirusTotal/AbuseIPDB API integration for IOC enrichment
