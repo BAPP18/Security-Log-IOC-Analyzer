@@ -4,10 +4,17 @@ services:
     runtime: python
     plan: free
     region: oregon
-    buildCommand: "pip install -r requirements.txt && pip install gunicorn"
-    startCommand: "gunicorn 'app:create_app()' --bind 0.0.0.0:$PORT"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn --workers 1 --threads 2 --timeout 180 'app:create_app()' --bind 0.0.0.0:$PORT"
+    healthCheckPath: /health
     envVars:
+      - key: APP_ENV
+        value: production
       - key: SECRET_KEY
         generateValue: true
+      - key: SEED_DEMO_USERS
+        value: "false"
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
       - key: PYTHONUNBUFFERED
         value: "true"
