@@ -2,158 +2,75 @@
 {% block content %}
 <div class="row mb-4">
     <div class="col">
-        <h4 class="text-light">
-            <i class="bi bi-speedometer2 text-info"></i> Dashboard
-        </h4>
-        <p class="text-muted">Overview of IOC analysis and system statistics.</p>
+        <h4 class="text-light"><i class="bi bi-speedometer2 text-info"></i> SOC Triage Dashboard</h4>
+        <p class="text-muted mb-1">Operational overview of analyzed files and normalized IOC candidates.</p>
+        <small class="text-warning">High-risk counts are local heuristic priorities and require analyst validation.</small>
     </div>
 </div>
 
 <div class="row g-3 mb-4">
     <div class="col-md-3">
-        <div class="card bg-dark border-secondary h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1 small">Total Analyses</p>
-                        <h3 class="text-light mb-0">{{ stats.total_analyses }}</h3>
-                    </div>
-                    <div class="rounded-circle p-3 bg-primary bg-opacity-10">
-                        <i class="bi bi-file-earmark-text fs-3 text-primary"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card bg-dark border-secondary h-100"><div class="card-body">
+            <p class="text-muted mb-1 small">Total Analyses</p>
+            <h3 class="text-light mb-0">{{ stats.total_analyses }}</h3>
+        </div></div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-dark border-secondary h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1 small">Uploaded Files</p>
-                        <h3 class="text-light mb-0">{{ stats.total_uploads }}</h3>
-                    </div>
-                    <div class="rounded-circle p-3 bg-success bg-opacity-10">
-                        <i class="bi bi-cloud-upload fs-3 text-success"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card bg-dark border-secondary h-100"><div class="card-body">
+            <p class="text-muted mb-1 small">Unique Indicators</p>
+            <h3 class="text-info mb-0">{{ stats.total_iocs }}</h3>
+            <small class="text-muted">{{ stats.total_occurrences }} total occurrences</small>
+        </div></div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-dark border-secondary h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1 small">IOCs Found</p>
-                        <h3 class="text-light mb-0">{{ stats.total_iocs }}</h3>
-                    </div>
-                    <div class="rounded-circle p-3 bg-danger bg-opacity-10">
-                        <i class="bi bi-shield-exclamation fs-3 text-danger"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card bg-dark border-danger h-100"><div class="card-body">
+            <p class="text-muted mb-1 small">High-Risk Candidates</p>
+            <h3 class="text-danger mb-0">{{ stats.high_risk_count }}</h3>
+            <small class="text-muted">risk score ≥ 60</small>
+        </div></div>
     </div>
     <div class="col-md-3">
-        <div class="card bg-dark border-secondary h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <p class="text-muted mb-1 small">Last Scan</p>
-                        <h6 class="text-light mb-0">
-                            {% if stats.last_scan %}
-                                {{ stats.last_scan.strftime('%Y-%m-%d %H:%M') }}
-                            {% else %}
-                                No scans yet
-                            {% endif %}
-                        </h6>
-                    </div>
-                    <div class="rounded-circle p-3 bg-info bg-opacity-10">
-                        <i class="bi bi-clock-history fs-3 text-info"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="card bg-dark border-secondary h-100"><div class="card-body">
+            <p class="text-muted mb-1 small">Last Analysis</p>
+            <h6 class="text-light mb-0">
+                {% if stats.last_scan %}{{ stats.last_scan.strftime('%Y-%m-%d %H:%M') }}{% else %}No scans yet{% endif %}
+            </h6>
+        </div></div>
     </div>
 </div>
 
 <div class="row g-3 mb-4">
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-globe text-warning fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.ip_count }}</h5>
-                <small class="text-muted">IP Address</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-diagram-3 text-info fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.domain_count }}</h5>
-                <small class="text-muted">Domain</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-link-45deg text-primary fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.url_count }}</h5>
-                <small class="text-muted">URL</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-envelope text-danger fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.email_count }}</h5>
-                <small class="text-muted">Email</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-hash text-success fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.hash_count }}</h5>
-                <small class="text-muted">File Hash</small>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-2">
-        <div class="card bg-dark border-secondary text-center h-100">
-            <div class="card-body py-3">
-                <i class="bi bi-shield-check text-info fs-4"></i>
-                <h5 class="text-light mt-2 mb-0">{{ stats.total_iocs }}</h5>
-                <small class="text-muted">Total IOC</small>
-            </div>
-        </div>
-    </div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-light mb-0">{{ stats.ip_count }}</h5><small class="text-muted">IP Address</small>
+    </div></div></div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-light mb-0">{{ stats.domain_count }}</h5><small class="text-muted">Domain</small>
+    </div></div></div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-light mb-0">{{ stats.url_count }}</h5><small class="text-muted">URL</small>
+    </div></div></div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-light mb-0">{{ stats.email_count }}</h5><small class="text-muted">Email</small>
+    </div></div></div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-light mb-0">{{ stats.hash_count }}</h5><small class="text-muted">File Hash</small>
+    </div></div></div>
+    <div class="col-md-2"><div class="card bg-dark border-secondary text-center h-100"><div class="card-body py-3">
+        <h5 class="text-secondary mb-0">{{ stats.likely_noise_count }}</h5><small class="text-muted">Likely Noise</small>
+    </div></div></div>
 </div>
 
 <div class="row g-3">
     <div class="col-md-8">
         <div class="card bg-dark border-secondary">
-            <div class="card-header bg-dark border-secondary">
-                <h6 class="text-light mb-0"><i class="bi bi-bar-chart text-info"></i> Upload Activity</h6>
-            </div>
-            <div class="card-body">
-                <canvas id="uploadChart" height="120"></canvas>
-            </div>
+            <div class="card-header bg-dark border-secondary"><h6 class="text-light mb-0"><i class="bi bi-bar-chart text-info"></i> Upload Activity</h6></div>
+            <div class="card-body"><canvas id="uploadChart" height="120"></canvas></div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="card bg-dark border-secondary">
-            <div class="card-header bg-dark border-secondary">
-                <h6 class="text-light mb-0"><i class="bi bi-pie-chart text-info"></i> IOC by Type</h6>
-            </div>
-            <div class="card-body">
-                <canvas id="iocPieChart" height="180"></canvas>
-            </div>
+            <div class="card-header bg-dark border-secondary"><h6 class="text-light mb-0"><i class="bi bi-pie-chart text-info"></i> IOC by Type</h6></div>
+            <div class="card-body"><canvas id="iocPieChart" height="180"></canvas></div>
         </div>
     </div>
 </div>
@@ -168,28 +85,20 @@
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-dark table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Type</th>
-                                <th>IOCs Found</th>
-                                <th>Upload Date</th>
-                                <th>Analyst</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>File</th><th>Type</th><th>Unique</th><th>Occurrences</th><th>High Risk</th><th>Date</th><th>Analyst</th></tr></thead>
                         <tbody>
                             {% for analysis in recent_analyses %}
                             <tr>
                                 <td>{{ analysis.filename }}</td>
                                 <td><span class="badge bg-secondary">{{ analysis.file_type.upper() }}</span></td>
-                                <td><span class="badge bg-danger">{{ analysis.total_ioc }}</span></td>
+                                <td>{{ analysis.total_ioc }}</td>
+                                <td>{{ analysis.total_occurrences }}</td>
+                                <td><span class="badge bg-{{ 'danger' if analysis.high_risk_ioc else 'secondary' }}">{{ analysis.high_risk_ioc }}</span></td>
                                 <td>{{ analysis.upload_date.strftime('%Y-%m-%d %H:%M') if analysis.upload_date else '-' }}</td>
                                 <td>{{ analysis.analyst.username if analysis.analyst else '-' }}</td>
                             </tr>
                             {% else %}
-                            <tr>
-                                <td colspan="5" class="text-center text-muted py-3">No analyses yet. Upload a file to get started.</td>
-                            </tr>
+                            <tr><td colspan="7" class="text-center text-muted py-3">No analyses yet. Upload a file to get started.</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -209,54 +118,14 @@ const iocTypeCounts = {{ ioc_type_counts | safe }};
 
 new Chart(document.getElementById('uploadChart'), {
     type: 'bar',
-    data: {
-        labels: activityLabels,
-        datasets: [{
-            label: 'Files Uploaded',
-            data: activityCounts,
-            backgroundColor: 'rgba(13, 202, 240, 0.2)',
-            borderColor: 'rgba(13, 202, 240, 1)',
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: { legend: { labels: { color: '#e0e0e0' } } },
-        scales: {
-            x: { ticks: { color: '#6c757d' }, grid: { color: 'rgba(255,255,255,0.05)' } },
-            y: { beginAtZero: true, ticks: { color: '#6c757d' }, grid: { color: 'rgba(255,255,255,0.05)' } }
-        }
-    }
+    data: { labels: activityLabels, datasets: [{ label: 'Files Analyzed', data: activityCounts, backgroundColor: 'rgba(13, 202, 240, 0.2)', borderColor: 'rgba(13, 202, 240, 1)', borderWidth: 1 }] },
+    options: { responsive: true, plugins: { legend: { labels: { color: '#e0e0e0' } } }, scales: { x: { ticks: { color: '#6c757d' }, grid: { color: 'rgba(255,255,255,0.05)' } }, y: { beginAtZero: true, ticks: { color: '#6c757d' }, grid: { color: 'rgba(255,255,255,0.05)' } } } }
 });
 
 new Chart(document.getElementById('iocPieChart'), {
     type: 'pie',
-    data: {
-        labels: iocTypeLabels,
-        datasets: [{
-            data: iocTypeCounts,
-            backgroundColor: [
-                'rgba(13, 202, 240, 0.8)',
-                'rgba(255, 193, 7, 0.8)',
-                'rgba(220, 53, 69, 0.8)',
-                'rgba(25, 135, 84, 0.8)',
-                'rgba(111, 66, 193, 0.8)',
-                'rgba(253, 126, 20, 0.8)',
-                'rgba(23, 162, 184, 0.8)'
-            ]
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: { color: '#e0e0e0', boxWidth: 12, padding: 8 }
-            }
-        }
-    }
+    data: { labels: iocTypeLabels, datasets: [{ data: iocTypeCounts, backgroundColor: ['rgba(13,202,240,.8)','rgba(255,193,7,.8)','rgba(220,53,69,.8)','rgba(25,135,84,.8)','rgba(111,66,193,.8)','rgba(253,126,20,.8)','rgba(23,162,184,.8)'] }] },
+    options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#e0e0e0', boxWidth: 12, padding: 8 } } } }
 });
 </script>
 {% endblock %}
