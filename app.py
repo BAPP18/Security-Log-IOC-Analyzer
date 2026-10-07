@@ -1,45 +1,55 @@
-import os
 import datetime
-from flask import Flask, render_template
+import os
+
+from flask import Flask, jsonify, render_template
+from flask_wtf.csrf import CSRFProtect
+
 from config import Config
 from models import db, login_manager
 from models.user import User
 from utils.helpers import create_default_users
 
-def create_app():
+csrf = CSRFProtect()
+
+
+def create_app(test_config=None):
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-    os.makedirs(app.config['EXPORT_FOLDER'], exist_ok=True)
-    os.makedirs(app.config['REPORT_FOLDER'], exist_ok=True)
-    os.makedirs(app.config['LOG_FOLDER'], exist_ok=True)
+    if test_config:
+        app.config.update(test_config)
 
-    db_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database')
-    os.makedirs(db_dir, exist_ok=True)
-
-    db_path = os.path.join(db_dir, 'bluelens.db')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
+    for folder_key in ("UPLOAD_FOLDER", "EXPORT_FOLDER", "REPORT_FOLDER", "LOG_FOLDER"):
+        os.makedirs(app.config[folder_key], exist_ok=True)
 
     db.init_app(app)
     login_manager.init_app(app)
+    csrf.init_app(app)
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.get(User, int(user_id))
+
+    @app.get("/health")
+    def health():
+        return jsonify(
+            status="ok",
+            service="bluelens",
+            environment=app.config.get("APP_ENV", "unknown"),
+        )
 
     @app.errorhandler(404)
-    def not_found(e):
-        return render_template('404.html'), 404
+    def not_found(_error):
+        return render_template("404.html"), 404
 
     @app.errorhandler(500)
-    def internal_error(e):
+    def internal_error(_error):
         db.session.rollback()
-        return render_template('500.html'), 500
+        return render_template("500.html"), 500
 
     @app.context_processor
     def inject_now():
-        return {'now': datetime.datetime.utcnow}
+        return {"now": datetime.datetime.utcnow}
 
     from routes.auth import auth_bp
     from routes.dashboard import dashboard_bp
@@ -59,20 +69,17 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-        create_default_users()
+        if app.config.get("SEED_DEMO_USERS"):
+            create_default_users()
 
     return app
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = create_app()
-    print("=" * 50)
-    print(" BlueLens - Security Log & IOC Analyzer")
-    print("=" * 50)
-    print(" Running on http://127.0.0.1:5000")
-    print(" Admin  : admin / admin123")
-    print(" Analyst: analyst / analyst123")
-    print("=" * 50)
-    try:
-        app.run(debug=True, host='127.0.0.1', port=5000)
-    except ImportError:
-        app.run(debug=True, host='127.0.0.1', port=5000, use_reloader=False)
+    app.run(
+        debug=app.config.get("APP_ENV") != "production",
+        host="127.0.0.1",
+        port=5000,
+        use_reloader=False,
+    )
