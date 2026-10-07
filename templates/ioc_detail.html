@@ -5,56 +5,46 @@
         <a href="{{ url_for('ioc.search') }}" class="btn btn-sm btn-outline-secondary mb-2">
             <i class="bi bi-arrow-left"></i> Back to Search
         </a>
-        <h4 class="text-light">
-            <i class="bi bi-shield-exclamation text-info"></i> IOC Detail
-        </h4>
+        <h4 class="text-light"><i class="bi bi-shield-exclamation text-info"></i> IOC Triage Detail</h4>
+        <small class="text-warning">This page presents local heuristic triage, not external reputation confirmation.</small>
     </div>
 </div>
 
 <div class="card bg-dark border-secondary">
-    <div class="card-header bg-dark border-secondary">
-        <h6 class="text-light mb-0"><i class="bi bi-info-circle text-info"></i> Indicator of Compromise Details</h6>
+    <div class="card-header bg-dark border-secondary d-flex justify-content-between align-items-center">
+        <h6 class="text-light mb-0"><i class="bi bi-info-circle text-info"></i> Indicator Candidate</h6>
+        <span class="badge bg-{{ 'danger' if ioc.severity in ('Critical','High') else 'warning text-dark' if ioc.severity == 'Medium' else 'primary' if ioc.severity == 'Low' else 'secondary' }} fs-6">
+            {{ ioc.severity }} · {{ ioc.risk_score }}/100
+        </span>
     </div>
     <div class="card-body">
-        <table class="table table-dark">
+        <table class="table table-dark align-middle">
             <tbody>
                 <tr>
-                    <th class="text-muted" style="width: 200px;">IOC Value</th>
-                    <td class="text-light user-select-all">{{ ioc.value }}</td>
+                    <th class="text-muted" style="width:220px;">IOC Value</th>
+                    <td class="text-light user-select-all text-break">{{ ioc.value }}</td>
                 </tr>
+                <tr><th class="text-muted">IOC Type</th><td><span class="badge bg-secondary">{{ ioc.ioc_type }}</span></td></tr>
+                <tr><th class="text-muted">Scope</th><td class="text-light">{{ ioc.scope }}</td></tr>
+                <tr><th class="text-muted">Confidence</th><td class="text-light">{{ ioc.confidence_score }}%</td></tr>
+                <tr><th class="text-muted">Risk Score</th><td class="text-light">{{ ioc.risk_score }}/100</td></tr>
+                <tr><th class="text-muted">Occurrences</th><td class="text-light">{{ ioc.occurrence_count }}</td></tr>
+                <tr><th class="text-muted">Representative Line</th><td class="text-light">{{ ioc.line_number }}</td></tr>
+                <tr><th class="text-muted">Source File</th><td class="text-light">{{ ioc.source_file }}</td></tr>
+                <tr><th class="text-muted">Triage Reason</th><td class="text-light">{{ ioc.triage_reason or '-' }}</td></tr>
                 <tr>
-                    <th class="text-muted">IOC Type</th>
-                    <td>
-                        <span class="badge bg-{{ 'warning text-dark' if ioc.ioc_type == 'IPv4' else 'primary' if ioc.ioc_type == 'Domain' else 'danger' if ioc.ioc_type == 'URL' else 'success' if ioc.ioc_type == 'Email' else 'secondary' }} fs-6">
-                            {{ ioc.ioc_type }}
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="text-muted">Source File</th>
-                    <td class="text-light">{{ ioc.source_file }}</td>
-                </tr>
-                <tr>
-                    <th class="text-muted">Line Number</th>
-                    <td class="text-light">{{ ioc.line_number }}</td>
+                    <th class="text-muted">Representative Context</th>
+                    <td><code class="text-warning text-wrap">{{ ioc.context or '-' }}</code></td>
                 </tr>
                 <tr>
                     <th class="text-muted">Detection Time</th>
                     <td class="text-light">{{ ioc.detection_time.strftime('%Y-%m-%d %H:%M:%S') if ioc.detection_time else '-' }}</td>
                 </tr>
                 {% if analysis %}
-                <tr>
-                    <th class="text-muted">Analysis ID</th>
-                    <td class="text-light">#{{ analysis.id }}</td>
-                </tr>
-                <tr>
-                    <th class="text-muted">Uploaded By</th>
-                    <td class="text-light">{{ analysis.analyst.username if analysis.analyst else '-' }}</td>
-                </tr>
-                <tr>
-                    <th class="text-muted">Upload Date</th>
-                    <td class="text-light">{{ analysis.upload_date.strftime('%Y-%m-%d %H:%M:%S') if analysis.upload_date else '-' }}</td>
-                </tr>
+                <tr><th class="text-muted">Analysis ID</th><td class="text-light">#{{ analysis.id }}</td></tr>
+                <tr><th class="text-muted">Uploaded By</th><td class="text-light">{{ analysis.analyst.username if analysis.analyst else '-' }}</td></tr>
+                <tr><th class="text-muted">File SHA-256</th><td class="text-light font-monospace text-break">{{ analysis.file_sha256 or '-' }}</td></tr>
+                <tr><th class="text-muted">Upload Date</th><td class="text-light">{{ analysis.upload_date.strftime('%Y-%m-%d %H:%M:%S') if analysis.upload_date else '-' }}</td></tr>
                 {% endif %}
             </tbody>
         </table>
