@@ -8,14 +8,19 @@ from models.ioc import IOC
 from models.activity import ActivityLog
 
 def create_default_users():
-    if User.query.filter_by(username='admin').first() is None:
-        admin = User(username='admin', role='admin')
-        admin.set_password('admin123')
+    """Create deterministic local-demo users.
+
+    This function is intentionally called only when SEED_DEMO_USERS is enabled.
+    Production deployments should provision identities separately.
+    """
+    if User.query.filter_by(username="admin").first() is None:
+        admin = User(username="admin", role="admin")
+        admin.set_password("admin123")
         db.session.add(admin)
 
-    if User.query.filter_by(username='analyst').first() is None:
-        analyst = User(username='analyst', role='analyst')
-        analyst.set_password('analyst123')
+    if User.query.filter_by(username="analyst").first() is None:
+        analyst = User(username="analyst", role="analyst")
+        analyst.set_password("analyst123")
         db.session.add(analyst)
 
     db.session.commit()
